@@ -16,6 +16,6 @@ makedocs(
 )
 
 deploydocs(
-    repo="github.com/rpp396/Powerdistancer.jl.git",
+    repo="github.com/rpp396/Powerdistancer.git",
     push_preview=true
 )
