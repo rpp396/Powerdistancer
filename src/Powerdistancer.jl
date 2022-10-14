@@ -1,9 +1,5 @@
 module Powerdistancer
 
-f() = 1
+greet() = print("Hello World!")
 
-g() = 3
-
-export f, g
-
-end # module Powerdistancer
+end # module

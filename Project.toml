@@ -1,7 +1,4 @@
-name = "Powerdistnancer"
+name = "Powerdistancer"
+uuid = "6b47d739-db58-494f-8e76-b871e91528d4"
 authors = ["DGM y RPP"]
 version = "0.1.0"
-
-
-[deps]
-Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
