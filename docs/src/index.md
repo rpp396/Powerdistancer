@@ -1,1 +1,1 @@
-# Template.jl
+# Powerdistancer.jl

@@ -1,11 +1,11 @@
-using Documenter, Template
+using Documenter, Powerdistancer
 
-DocMeta.setdocmeta!(Template, :DocTestSetup,
-    :(using Template); recursive=true)
+DocMeta.setdocmeta!(Powerdistancer, :DocTestSetup,
+    :(using Powerdistancer); recursive=true)
 
 makedocs(
-    sitename="Template",
-    modules=[Template],
+    sitename="Powerdistancer",
+    modules=[Powerdistancer],
     format=Documenter.HTML(
         prettyurls=get(ENV, "CI", nothing) == "true",
         assets=["assets/aligned.css"]),
@@ -16,6 +16,6 @@ makedocs(
 )
 
 deploydocs(
-    repo="github.com/mforets/Template.jl.git",
+    repo="github.com/rpp396/Powerdistancer.jl.git",
     push_preview=true
 )

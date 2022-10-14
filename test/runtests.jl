@@ -1,3 +1,3 @@
-using Test, Template
+using Test, Powerdistancer
 
 @test f() == 1
