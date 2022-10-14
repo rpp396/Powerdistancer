@@ -1,3 +1,5 @@
-Plots recipes
+Literate.jl #herramienta para generar ejemplos y Test
+DocStringExtensions.jl #para automatizar la firma de la función en la documentación
+Plots recipes #Para hacer recetas de ploteo
 
 
