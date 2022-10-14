@@ -6,7 +6,7 @@ on:
       - 'LICENSE'
       - 'README.md'
     branches:
-      - master
+      - main
 
 jobs:
   test:
