@@ -15,6 +15,7 @@ function generarSeno(; duracion=5, f=50, fs=10000, valorPico=1)
     # f frecuencia de la señal periódica
     # fs frecuencia de muestreo
     # valorPico es la máxima amplitud
+    #
 
     v = []
     for i in 1:(duracion*fs)
