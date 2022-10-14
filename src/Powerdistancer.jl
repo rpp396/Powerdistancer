@@ -1,5 +1,7 @@
 module Powerdistancer
 
-greet() = print("Hello World!")
+function f()
+   return 1
+end
 
 end # module
