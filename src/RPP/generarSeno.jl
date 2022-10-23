@@ -9,7 +9,7 @@ por ejemplo: duracion=2, fs=200, la longitud del vector será duracion * fs = 2 
 
 
 """
-function generarSeno(; duracion=5, f=50, fs=10000, valorPico=1)
+function generarSeno(; duracion = 5, f = 50, fs = 10000, valorPico = 1)
     # duración en segundos
     # f y fs en Hz.  
     # f frecuencia de la señal periódica
@@ -18,7 +18,7 @@ function generarSeno(; duracion=5, f=50, fs=10000, valorPico=1)
     #
 
     v = []
-    for i in 1:(duracion*fs)
+    for i = 1:(duracion*fs)
         push!(v, valorPico * sin(f * 2 * pi * i / (fs)))
     end
     return v
