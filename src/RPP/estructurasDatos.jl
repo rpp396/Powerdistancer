@@ -5,11 +5,11 @@ struct Canal
     #valores_fasor::Any #vector de complejos (valores RMS)
     #frecuencia_muestreo::Any #en Hz cantidad de muestras por segundos
 end
-function obtenerCanales(pathCOMTRADE,[id])#pathDataFrame: la ruta del comtrade; id el un vector de
+function obtenerCanales(pathCOMTRADE, [id])#pathDataFrame: la ruta del comtrade; id el un vector de
     #retorna los  6 u 9 canales de corrientes y tensiones
     #retorna la frecuenca de frecuencia_muestreo
     #la cantidad de puntos la sabemos de los largos de los vectores.   
-end 
+end
 
 abstract type Sistema_trifasico end
 
