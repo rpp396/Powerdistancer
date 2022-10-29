@@ -4,6 +4,7 @@ authors = ["DGM y RPP"]
 version = "0.1.0"
 
 [deps]
+BasicInterpolators = "26cce99e-4866-4b6d-ab74-862489e035e0"
 COMTRADE = "39eb2054-9c37-49d8-bb65-10e6baadba6c"
 Gtk = "4c0ca9eb-093a-5379-98c5-f87ac0bbbf44"
 Infiltrator = "5903a43b-9cc3-4c30-8d17-598619ec4e9b"

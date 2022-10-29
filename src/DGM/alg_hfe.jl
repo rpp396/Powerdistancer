@@ -1,7 +1,12 @@
-# Hybrid Frequency Estimator
-# basado en "An Open-Loop Fundamental and Harmonic Phasor Estimator for Single-Phase Voltage Signals" Motakatla Venkateswara Reddy y Ranjana Sodhi
+"""
+    HFE(datos, n::Integer; fn=50, fs=1000)
+ 
+    Hybrid Frequency Estimator
+ basado en "An Open-Loop Fundamental and Harmonic Phasor Estimator for Single-Phase Voltage Signals" Motakatla Venkateswara Reddy y Ranjana Sodhi
 
-# ahroa trabajo con vectores pero la idea es usar la estructura que definamos para manejar los datos de las señales
+ ahroa trabajo con vectores pero la idea es usar la estructura que definamos para manejar los datos de las señales
+
+"""
 function HFE(datos, n::Integer; fn=50, fs=1000)
     # datos un array con las muestras
     # n en que indice del vector tengo que calcular la frecuencia
