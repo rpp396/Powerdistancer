@@ -16,7 +16,8 @@ makedocs(
         prettyurls = get(ENV, "CI", nothing) == "true",
         assets = ["assets/aligned.css"],
     ),
-    pages = ["Home" => "index.md"],
+    pages = ["Home" => "index.md",
+             "Table of contents" => "toc.md"],
     strict = true,
 )
 
