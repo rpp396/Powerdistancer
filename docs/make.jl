@@ -1,6 +1,9 @@
 push!(LOAD_PATH,"../src/")
 
-using Documenter, Powerdistancer
+using Documenter, Powerdistancer, DocumenterCitations
+
+bib = CitationBibliography(joinpath(@__DIR__, "Referencias.bib"), sorting = :nyt)
+
 
 DocMeta.setdocmeta!(
     Powerdistancer,
@@ -9,7 +12,7 @@ DocMeta.setdocmeta!(
     recursive = true,
 )
 
-makedocs(
+makedocs(bib,
     sitename = "Powerdistancer",
     modules = [Powerdistancer],
     format = Documenter.HTML(
@@ -18,7 +21,8 @@ makedocs(
     ),
     pages = ["Interface" => "index.md",
              "All functions" => "todas.md",
-             "Table of contents" => "toc.md"],
+             "References" => "references.md",
+             "Table of contents" => "toc.md",],
     strict = true,
 )
 
