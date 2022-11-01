@@ -2,5 +2,5 @@
 
 
 ```@docs
-HFE
+hybrid_freq_est
 ```

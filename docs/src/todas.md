@@ -1,4 +1,4 @@
-# Funciones de Interface y funciones internas del módulo
+# Funciones de Interface y funciones privadas del módulo
 
 
 ```@autodocs

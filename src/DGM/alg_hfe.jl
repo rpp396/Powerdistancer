@@ -1,5 +1,5 @@
 """
-    HFE(datos, n::Integer; fn=50, fs=1000)
+    hybrid_freq_est(datos, n::Integer; fn=50, fs=1000)
  
     Hybrid Frequency Estimator
  basado en [8887270](@cite)
@@ -7,7 +7,7 @@
  ahora trabajo con vectores pero la idea es usar la estructura que definamos para manejar los datos de las señales
 
 """
-function HFE(datos, n::Integer; fn=50, fs=1000)
+function hybrid_freq_est(datos, n::Integer; fn=50, fs=1000)
     # datos un array con las muestras
     # n en que indice del vector tengo que calcular la frecuencia
     # fn frecuencia nominal del sistema
@@ -15,7 +15,7 @@ function HFE(datos, n::Integer; fn=50, fs=1000)
 
     ciclo=datos[n:Integer(n+ceil(fs/fn))]
     display(plot(ciclo))
-    cruces=NZC(ciclo)
+    cruces=_NZC(ciclo)
     
     f_est= length(cruces)>=2 ? fs/((cruces[2]-cruces[1])*2) : fn
     f_i=f_est
@@ -24,7 +24,7 @@ function HFE(datos, n::Integer; fn=50, fs=1000)
     while  (error > 0.0005) & (grado < 9)
         ciclo=DMF(datos[n:Integer(n+ceil(fs/fn)+grado+1)],grado)
         display(plot!(ciclo))
-        cruces=NZC(ciclo)
+        cruces=_NZC(ciclo)
         # println(cruces)
         f_i= length(cruces)>=2 ? fs/((cruces[2]-cruces[1])*2) : f_i
         error=abs(f_est-f_i)
@@ -36,7 +36,16 @@ function HFE(datos, n::Integer; fn=50, fs=1000)
 end
 
 using BasicInterpolators: CubicInterpolator
-function NZC(ciclo)
+
+"""
+    _NZC(ciclo)
+
+    Dado un vector de muestras, devuelve un vector de los cruces por cero.
+    El algoritmo hace una eliminación de la componente continua (valida para tamaño de muestra de pocos ciclos).
+    Los índices devueltos como resultado son fraccionarios pues la función realiza una estimación polinomial del cruce por cero.
+
+"""
+function _NZC(ciclo)
     # devulve vector con los cruces por cero, tiempo donde ocurre (usando interpolacion polinomial )
     
     # elimino componente de continua
@@ -75,7 +84,14 @@ function NZC(ciclo)
     return ZC
 end
 
-function DMF(datos,grado)
+"""
+    _DMF(datos,grado)
+
+    Dado un vector con muestras de una señal, se devulve la señal filtrada con un filtro de promedio de grado "grado".
+    El vector de salida tiene largo menor al vector de entrada, en (grado-1) elementos.
+"""
+
+function _DMF(datos,grado)
     # implementa filtro de promedio de "grado" puntos consecutivos.
     # devuelve nuevo vector con los datos filtrados.
     # tener en cuenta que se devuelve un vector con "grado"-1 elementos menos

@@ -1,9 +1,9 @@
 module Powerdistancer
 
 archDGM="DGM/"
-include("DGM/alg_hfe.jl")
+include(archDGM * "alg_hfe.jl")
 
-export HFE
+export hybrid_freq_est
 
 function f()
     return 1
