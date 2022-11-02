@@ -1,3 +1,66 @@
+
+# template para funciones exportadas
+
+"""
+    mysearch(array::MyArray{T}, val::T; verbose=true) where {T} -> Int
+
+Searches the `array` for the `val`. For some reason we don't want to use Julia's
+builtin search :)
+
+# Arguments
+- `array::MyArray{T}`: the array to search
+- `val::T`: the value to search for
+
+# Keywords
+- `verbose::Bool=true`: print out progress details
+
+# Returns
+- `Int`: the index where `val` is located in the `array`
+
+# Throws
+- `NotFoundError`: I guess we could throw an error if `val` isn't found.
+"""
+# o
+
+"""
+    Manager(args...; kwargs...) -> Manager
+
+A cluster manager which spawns workers.
+
+# Arguments
+
+- `min_workers::Integer`: The minimum number of workers to spawn or an exception is thrown
+- `max_workers::Integer`: The requested number of workers to spawn
+
+# Keywords
+
+- `definition::AbstractString`: Name of the job definition to use. Defaults to the
+    definition used within the current instance.
+- `name::AbstractString`: ...
+- `queue::AbstractString`: ...
+"""
+# o
+"""
+    Manager(max_workers; kwargs...)
+    Manager(min_workers:max_workers; kwargs...)
+    Manager(min_workers, max_workers; kwargs...)
+
+A cluster manager which spawns workers.
+
+# Arguments
+
+- `min_workers::Int`: The minimum number of workers to spawn or an exception is thrown
+- `max_workers::Int`: The requested number of workers to spawn
+
+# Keywords
+
+- `definition::AbstractString`: Name of the job definition to use. Defaults to the
+    definition used within the current instance.
+- `name::AbstractString`: ...
+- `queue::AbstractString`: ...
+"""
+
+
 """
     hybrid_freq_est(datos, n::Integer; fn=50, fs=1000)
  
@@ -90,7 +153,6 @@ end
     Dado un vector con muestras de una señal, se devulve la señal filtrada con un filtro de promedio de grado "grado".
     El vector de salida tiene largo menor al vector de entrada, en (grado-1) elementos.
 """
-
 function _DMF(datos,grado)
     # implementa filtro de promedio de "grado" puntos consecutivos.
     # devuelve nuevo vector con los datos filtrados.
