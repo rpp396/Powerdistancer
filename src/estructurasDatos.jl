@@ -1,5 +1,3 @@
-struct Tensiones
-
 """
     Canal
 
@@ -7,7 +5,6 @@ struct Tensiones
     El valor está expresado en magnitudes físicas primarias.
 """
 struct Canal
-    id::Int #El lugar donde se ubica en el comtrade
     nombre::String #nombre del canal: vr,vs,vt,ir,is,it
     valores_instantaneos::Any #vector de reales (valores instantáneos)
     #valores_fasor::Any #vector de complejos (valores RMS)
@@ -20,11 +17,6 @@ struct Canal
     # conversion factor restores the original sampled values. See Annex E for an example.
  # al leerlos del archivo ya deberían quedar en primarios y con la cte correspondiente aplicada para llevarlo a magnitudes reales
 
-end
-function obtenerCanales(pathCOMTRADE, [id])#pathDataFrame: la ruta del comtrade; id el un vector de
-    #retorna los  6 u 9 canales de corrientes y tensiones
-    #retorna la frecuenca de frecuencia_muestreo
-    #la cantidad de puntos la sabemos de los largos de los vectores.   
 end
 
 abstract type Sistema_trifasico end
