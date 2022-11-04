@@ -25,3 +25,6 @@ function generarSeno(; duracion = 5, f = 50, fs = 10000, valorPico = 1)
 end
 
 export generarSeno
+
+#= puntos=range(0,1, length=100)
+vectorpuntos=collect(puntos) =#
