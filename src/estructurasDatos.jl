@@ -7,6 +7,7 @@
 struct Canal
     nombre::String #nombre del canal: vr,vs,vt,ir,is,it
     valores_instantaneos::Any #vector de reales (valores instantáneos)
+    unidad::String #Volt, Amper, Hz, etc...
     #valores_fasor::Any #vector de complejos (valores RMS)
     #frecuencia_muestreo::Any #en Hz cantidad de muestras por segundos
     #a multiplicador del canal
