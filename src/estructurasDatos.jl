@@ -23,20 +23,22 @@ end
 abstract type Sistema_trifasico end
 
 struct Sistema_trifasico_fasores <: Sistema_trifasico
-    v1::Canal
-    v2::Canal
-    v3::Canal
-    c1::Canal
-    c2::Canal
-    c3::Canal
-    frecuencia_muestreo::Any #en Hz cantidad de muestras por segundos
+    va::Canal
+    vb::Canal
+    vc::Canal
+    ca::Canal
+    cb::Canal
+    cc::Canal
+    frecuencia::Canal
+    #frecuencia_muestreo::Any #en Hz cantidad de muestras por segundos
 end
 struct Sistema_trifasico_RMS <: Sistema_trifasico
-    v1::Canal
-    v2::Canal
-    v3::Canal
-    c1::Canal
-    c2::Canal
-    c3::Canal
-    frecuencia_muestreo::Any #en Hz cantidad de muestras por segundos
+    va::Canal
+    vb::Canal
+    vc::Canal
+    ca::Canal
+    cb::Canal
+    cc::Canal
+    frecuencia::Canal
+    #frecuencia_muestreo::Any #en Hz cantidad de muestras por segundos
 end
