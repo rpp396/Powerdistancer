@@ -1,11 +1,11 @@
 #funcion para obtener canales, la salida debe ser en unidades primarias (por ejemplo amperios, voltios, etc...)
-    using Gtk
+    #using Gtk
     using COMTRADE
     #using Unitful
     include("../estructurasDatos.jl")
-function obtenerCanales()
+function obtenerCanales(pathCOMTRADE="src\\Comtrade\\NOR-T2_osc1")
 
-    pathCOMTRADE = open_dialog_native("Elegir COMTRADE .CFG", GtkNullContainer(), String["*.cfg"])
+    #pathCOMTRADE = open_dialog_native("Elegir COMTRADE .CFG", GtkNullContainer(), String["*.cfg"])
     #sacar el ".cfg" del path obtenido para pasarle al read_comtrade
     pathCOMTRADE = replace(pathCOMTRADE, ".CFG" =>"")
     pathCOMTRADE = replace(pathCOMTRADE, ".cfg" =>"")
