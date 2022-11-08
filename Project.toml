@@ -6,7 +6,6 @@ version = "0.1.0"
 [deps]
 BasicInterpolators = "26cce99e-4866-4b6d-ab74-862489e035e0"
 COMTRADE = "39eb2054-9c37-49d8-bb65-10e6baadba6c"
-Gtk = "4c0ca9eb-093a-5379-98c5-f87ac0bbbf44"
 Infiltrator = "5903a43b-9cc3-4c30-8d17-598619ec4e9b"
 JuliaFormatter = "98e50ef6-434e-11e9-1051-2b60c6c9e899"
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"

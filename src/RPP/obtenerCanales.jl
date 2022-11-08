@@ -35,9 +35,14 @@ end
 
 
 #= 
-pathCOMTRADE = open_dialog_native("Elegir COMTRADE .CFG", GtkNullContainer(), String["*.cfg"])
-pathCOMTRADE = replace(pathCOMTRADE, ".CFG" =>"")
-pathCOMTRADE = replace(pathCOMTRADE, ".cfg" =>"")
 comtrade = read_comtrade(pathCOMTRADE)
 VSCodeServer.vscodedisplay(comtrade.dat) #Para ver los DataFrames
 =#
+
+#= Agregar el calculo de frecuencia de sampleo a la funcion o al paquete COMTRADE =#
+prueba=obtenerCanales()
+comtrades = read_comtrade("src\\Comtrade\\test")
+@show comtrades.cfg.samp
+@show comtrades.cfg.endsamp
+@show comtrades.cfg.nrates
+@show comtrades.cfg.npts
