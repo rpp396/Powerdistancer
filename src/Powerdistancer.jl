@@ -1,12 +1,15 @@
 module Powerdistancer
 
-archDGM = "DGM/"
-include(archDGM * "alg_hfe.jl")
+# Cargar dependencias.
+include("init.jl")
 
-export hybrid_freq_est
+# Estructuras de datos.
+include("canales.jl")
 
-function f()
-	return 1
-end
+# Algoritmos.
+include(joinpath("DGM", "alg_hfe.jl"))
+
+# Metodos y tipos exportados.
+include("exports.jl")
 
 end # module

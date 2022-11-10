@@ -16,7 +16,7 @@ struct Canal
 
     # The channel conversion factor is ax+b. The stored data value of x, in the data (.DAT) file, correspond to a sampled value of (ax+b) in units (uu) specified above. The rules of mathematical parsing are followed such that the data sample “x” is multiplied by the gain factor “a” and then the offset factor “b” is added. Manipulation of the data value by the 
     # conversion factor restores the original sampled values. See Annex E for an example.
- # al leerlos del archivo ya deberían quedar en primarios y con la cte correspondiente aplicada para llevarlo a magnitudes reales
+    # al leerlos del archivo ya deberían quedar en primarios y con la cte correspondiente aplicada para llevarlo a magnitudes reales
 
 end
 
@@ -32,6 +32,7 @@ struct Sistema_trifasico_fasores <: Sistema_trifasico
     frecuencia::Canal
     #frecuencia_muestreo::Any #en Hz cantidad de muestras por segundos
 end
+
 struct Sistema_trifasico_RMS <: Sistema_trifasico
     va::Canal
     vb::Canal
