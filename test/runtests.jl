@@ -15,4 +15,4 @@ end
     # include("utils.jl")
 end
 
-@test Powerdistancer.f() == 1
+#@test Powerdistancer.f() == 1
