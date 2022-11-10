@@ -1,5 +1,3 @@
-struct Tensiones
-
 """
     Canal
 
@@ -7,7 +5,6 @@ struct Tensiones
     El valor está expresado en magnitudes físicas primarias.
 """
 struct Canal
-    id::Int #El lugar donde se ubica en el comtrade
     nombre::String #nombre del canal: vr,vs,vt,ir,is,it
     valores_instantaneos::Any #vector de reales (valores instantáneos)
     unidad::String #Volt, Amper, Hz, etc...
@@ -22,29 +19,26 @@ struct Canal
  # al leerlos del archivo ya deberían quedar en primarios y con la cte correspondiente aplicada para llevarlo a magnitudes reales
 
 end
-function obtenerCanales(pathCOMTRADE, [id])#pathDataFrame: la ruta del comtrade; id el un vector de
-    #retorna los  6 u 9 canales de corrientes y tensiones
-    #retorna la frecuenca de frecuencia_muestreo
-    #la cantidad de puntos la sabemos de los largos de los vectores.   
-end
 
 abstract type Sistema_trifasico end
 
 struct Sistema_trifasico_fasores <: Sistema_trifasico
-    v1::Canal
-    v2::Canal
-    v3::Canal
-    c1::Canal
-    c2::Canal
-    c3::Canal
-    frecuencia_muestreo::Any #en Hz cantidad de muestras por segundos
+    va::Canal
+    vb::Canal
+    vc::Canal
+    ca::Canal
+    cb::Canal
+    cc::Canal
+    frecuencia::Canal
+    #frecuencia_muestreo::Any #en Hz cantidad de muestras por segundos
 end
 struct Sistema_trifasico_RMS <: Sistema_trifasico
-    v1::Canal
-    v2::Canal
-    v3::Canal
-    c1::Canal
-    c2::Canal
-    c3::Canal
-    frecuencia_muestreo::Any #en Hz cantidad de muestras por segundos
+    va::Canal
+    vb::Canal
+    vc::Canal
+    ca::Canal
+    cb::Canal
+    cc::Canal
+    frecuencia::Canal
+    #frecuencia_muestreo::Any #en Hz cantidad de muestras por segundos
 end
