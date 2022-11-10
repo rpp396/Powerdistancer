@@ -1,5 +1,7 @@
 using Test, Powerdistancer
 
+include("lectura.jl")
+
 @testset "Funciones Rodrigo" begin
     # include("arithmetic.jl")
     # include("utils.jl")
