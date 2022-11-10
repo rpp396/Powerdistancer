@@ -1,13 +1,8 @@
 """
 Funcion para obtener canales, la salida debe ser en unidades primarias (por ejemplo amperios, voltios, etc...).
 """
-function obtenerCanales(pathCOMTRADE="src\\Comtrade\\NOR-T2_osc1")
-
-    #pathCOMTRADE = open_dialog_native("Elegir COMTRADE .CFG", GtkNullContainer(), String["*.cfg"])
-    #sacar el ".cfg" del path obtenido para pasarle al read_comtrade
-    pathCOMTRADE = replace(pathCOMTRADE, ".CFG" => "")
-    pathCOMTRADE = replace(pathCOMTRADE, ".cfg" => "")
-    comtrade = read_comtrade(pathCOMTRADE)
+function leer_canales(; path, debug=true)
+    comtrade = read_comtrade(path)
     #Nota: el comando read_comtrade ya toma en cuenta el factor de escalamiento "a" y de offset "b"
 
     #= 
@@ -28,29 +23,13 @@ function obtenerCanales(pathCOMTRADE="src\\Comtrade\\NOR-T2_osc1")
     #frecuencia_muestreo? es necesario calcularla aca? 
     frecuencia_muestreo = (comtrade.cfg.triggertime[1] - comtrade.cfg.time[1]) / comtrade.cfg.endsamp[1]
     #tiempo_de_muestra y frecuencia como canal o vectores?
-    println("nrates: $(comtrade.cfg.nrates)")
-    println("samp: $(comtrade.cfg.samp)")
-    println("endsamp: $(comtrade.cfg.endsamp)")
-    println("frecuencia de muestreo $(frecuencia_muestreo)")
-    return ()
-    #return([va,vb,vc,ia,ib,ic,frecuencia_sistema,frecuencia_muestreo])
 
+    if debug
+        println("nrates: $(comtrade.cfg.nrates)")
+        println("samp: $(comtrade.cfg.samp)")
+        println("endsamp: $(comtrade.cfg.endsamp)")
+        println("frecuencia de muestreo $(frecuencia_muestreo)")
+    end
+
+    return [va, vb, vc, ia, ib, ic, frecuencia_sistema, frecuencia_muestreo]
 end
-#walkdir() para iterar en carpeta 
-
-#= 
-comtrade = read_comtrade(pathCOMTRADE)
-VSCodeServer.vscodedisplay(comtrade.dat) #Para ver los DataFrames
-=#
-#DOL_000_TRA_TR1_F2
-#test
-#MVAlineaPANHR_10233
-#= Agregar el calculo de frecuencia de sampleo a la funcion o al paquete COMTRADE =#
-prueba = obtenerCanales()
-comtrades = read_comtrade("src\\Comtrade\\DOL_000_TRA_TR1_F2")
-@show comtrades.cfg.samp
-@show comtrades.cfg.endsamp
-@show comtrades.cfg.nrates
-@show comtrades.cfg.npts
-@show comtrades.cfg.time
-@show comtrades.cfg.lf
