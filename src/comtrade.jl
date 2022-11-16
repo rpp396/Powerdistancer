@@ -21,8 +21,9 @@ function leer_canales(; path, debug=true)
     frecuencia_sistema = Canal(comtrade.cfg.A[9, 2], comtrade.dat[!, 9+2], comtrade.cfg.A[9, 5])
     tiempo_de_muestra = comtrade.dat[!, 2] #el tiempo en que se tomó cada muestra, empezando la muesta n = 1 en tiempo = 0 
     #frecuencia_muestreo? es necesario calcularla aca? 
-    frecuencia_muestreo = (comtrade.cfg.triggertime[1] - comtrade.cfg.time[1]) / comtrade.cfg.endsamp[1]
-    #tiempo_de_muestra y frecuencia como canal o vectores?
+    for i in 1:length(comtrade.cfg.nrates) #samp o nrates?
+    frecuencia_muestreo = comtrade.cfg.endsamp[1]
+
 
     if debug
         println("nrates: $(comtrade.cfg.nrates)")
@@ -31,8 +32,8 @@ function leer_canales(; path, debug=true)
         println("frecuencia de muestreo $(frecuencia_muestreo)")
     end
 
-    return [va, vb, vc, ia, ib, ic, frecuencia_sistema, frecuencia_muestreo]
+    return [comtrade.cfg.nrates,comtrade.cfg.samp,comtrade.cfg.endsamp]
+    #return [va, vb, vc, ia, ib, ic, frecuencia_sistema, frecuencia_muestreo]
 end
 
-path = joinpath("data", "comtrade", "RelaySimTest")
-#=  =#
+#path = joinpath("data", "comtrade", "RelaySimTest")
