@@ -1,2 +1,2 @@
-using COMTRADE, DataFrames
+using COMTRADE
 # Unitful
