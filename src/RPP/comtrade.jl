@@ -36,4 +36,4 @@ function leer_canales(; path, debug=true)
     #return [va, vb, vc, ia, ib, ic, frecuencia_sistema, frecuencia_muestreo]
 end
 
-#path = joinpath("data", "comtrade", "RelaySimTest")
+#path = joinpath("..","data", "comtrade", "RelaySimTest")
