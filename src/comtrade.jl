@@ -18,10 +18,10 @@ function leer_canales(; path, debug=true)
     ia = Canal(comtrade.cfg.A[4, 2], comtrade.dat[!, 4+2], comtrade.cfg.A[4, 5])
     ib = Canal(comtrade.cfg.A[5, 2], comtrade.dat[!, 5+2], comtrade.cfg.A[5, 5])
     ic = Canal(comtrade.cfg.A[6, 2], comtrade.dat[!, 6+2], comtrade.cfg.A[6, 5])
-    frecuencia_sistema = Canal(comtrade.cfg.A[9, 2], comtrade.dat[!, 9+2], comtrade.cfg.A[9, 5])
+    frecuencia = Canal(comtrade.cfg.A[9, 2], comtrade.dat[!, 9+2], comtrade.cfg.A[9, 5])
     tiempo_de_muestra = comtrade.dat[!, 2] #el tiempo en que se tomó cada muestra, empezando la muesta n = 1 en tiempo = 0 
     #frecuencia_muestreo? es necesario calcularla aca? 
-    frecuencia_muestreo = (comtrade.cfg.triggertime[1] - comtrade.cfg.time[1]) / comtrade.cfg.endsamp[1]
+    frecuencia_muestreo = comtrade.cfg.endsamp[1] / (comtrade.cfg.triggertime[1] - comtrade.cfg.time[1])
     #tiempo_de_muestra y frecuencia como canal o vectores?
 
     if debug
@@ -29,7 +29,13 @@ function leer_canales(; path, debug=true)
         println("samp: $(comtrade.cfg.samp)")
         println("endsamp: $(comtrade.cfg.endsamp)")
         println("frecuencia de muestreo $(frecuencia_muestreo)")
+        println("triggertime: $(comtrade.cfg.triggertime)")
+        println("time: $(comtrade.cfg.time)")
+        #println("triggertime-time: $(comtrade.cfg.triggertime - comtrade.cfg.time)")
     end
-
-    return [va, vb, vc, ia, ib, ic, frecuencia_sistema, frecuencia_muestreo]
+    return Sistema_trifasico_instanteneos(va, vb, vc, ia, ib, ic, frecuencia, frecuencia_muestreo)
+    #return [va, vb, vc, ia, ib, ic, frecuencia_sistema, frecuencia_muestreo]
 end
+ruta = joinpath("data", "comtrade", "test")
+walkdir(ruta)
+a = leer_canales(path=ruta)

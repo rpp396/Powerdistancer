@@ -26,20 +26,31 @@ struct Sistema_trifasico_fasores <: Sistema_trifasico
     va::Canal
     vb::Canal
     vc::Canal
-    ca::Canal
-    cb::Canal
-    cc::Canal
+    ia::Canal
+    ib::Canal
+    ic::Canal
     frecuencia::Canal
-    #frecuencia_muestreo::Any #en Hz cantidad de muestras por segundos
+    frecuencia_muestreo::Any #en Hz cantidad de muestras por segundos
 end
 
 struct Sistema_trifasico_RMS <: Sistema_trifasico
     va::Canal
     vb::Canal
     vc::Canal
-    ca::Canal
-    cb::Canal
-    cc::Canal
+    ia::Canal
+    ib::Canal
+    ic::Canal
     frecuencia::Canal
-    #frecuencia_muestreo::Any #en Hz cantidad de muestras por segundos
+    frecuencia_muestreo::Any #en Hz cantidad de muestras por segundos
+end
+
+struct Sistema_trifasico_instanteneos <: Sistema_trifasico
+    va::Canal
+    vb::Canal
+    vc::Canal
+    ia::Canal
+    ib::Canal
+    ic::Canal
+    frecuencia::Canal
+    frecuencia_muestreo::Any #en Hz cantidad de muestras por segundos
 end
