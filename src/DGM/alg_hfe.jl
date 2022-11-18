@@ -1,5 +1,5 @@
 
-# template para funciones exportadas
+# template de documentación para funciones exportadas
 
 """
 	mysearch(array::MyArray{T}, val::T; verbose=true) where {T} -> Int
