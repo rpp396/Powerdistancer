@@ -1,7 +1,7 @@
 """
 Funcion para obtener canales, la salida debe ser en unidades primarias (por ejemplo amperios, voltios, etc...).
 """
-function leer_canales(; path, debug=true)
+function leer_canales(; path, conf=[1, 2, 3, 4, 5, 6], debug=true)
     comtrade = read_comtrade(path)
     #Nota: el comando read_comtrade ya toma en cuenta el factor de escalamiento "a" y de offset "b"
 

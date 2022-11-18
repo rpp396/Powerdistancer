@@ -7,7 +7,7 @@ include("init.jl")
 include("canales.jl")
 
 # Lectura de archivos COMTRADE.
-include("comtrade.jl")
+include(joinpath("RPP", "comtrade.jl"))
 
 # Algoritmos.
 include(joinpath("DGM", "alg_hfe.jl"))

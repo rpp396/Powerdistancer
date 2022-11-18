@@ -5,8 +5,7 @@
     El valor está expresado en magnitudes físicas primarias.
 """
 struct Canal
-    nombre::String #nombre del canal: vr,vs,vt,ir,is,it
-    valores_instantaneos::Any #vector de reales (valores instantáneos)
+    valores::Number #vector de reales (valores instantáneos)
     unidad::String #Volt, Amper, Hz, etc...
     #valores_fasor::Any #vector de complejos (valores RMS)
     #frecuencia_muestreo::Any #en Hz cantidad de muestras por segundos
@@ -29,8 +28,8 @@ struct Sistema_trifasico_fasores <: Sistema_trifasico
     ia::Canal
     ib::Canal
     ic::Canal
-    frecuencia::Canal
-    frecuencia_muestreo::Any #en Hz cantidad de muestras por segundos
+    frecuencia::Number
+    frecuencia_muestreo::Number #en Hz cantidad de muestras por segundos
 end
 
 struct Sistema_trifasico_RMS <: Sistema_trifasico
@@ -40,8 +39,8 @@ struct Sistema_trifasico_RMS <: Sistema_trifasico
     ia::Canal
     ib::Canal
     ic::Canal
-    frecuencia::Canal
-    frecuencia_muestreo::Any #en Hz cantidad de muestras por segundos
+    frecuencia::Number
+    frecuencia_muestreo::Number #en Hz cantidad de muestras por segundos
 end
 
 struct Sistema_trifasico_instanteneos <: Sistema_trifasico
@@ -51,6 +50,6 @@ struct Sistema_trifasico_instanteneos <: Sistema_trifasico
     ia::Canal
     ib::Canal
     ic::Canal
-    frecuencia::Canal
-    frecuencia_muestreo::Any #en Hz cantidad de muestras por segundos
+    frecuencia::Number
+    frecuencia_muestreo::Number #en Hz cantidad de muestras por segundos
 end
