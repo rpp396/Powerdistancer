@@ -62,13 +62,12 @@ A cluster manager which spawns workers.
 
 
 """
-	hybrid_freq_est(datos, n::Integer; fn=50, fs=1000)
- 
 	Hybrid Frequency Estimator
  basado en [8887270](@cite)
 
  ahora trabajo con vectores pero la idea es usar la estructura que definamos para manejar los datos de las señales
-
+ $(TYPEDSIGNATURES)
+ 
 """
 function hybrid_freq_est(datos, n::Integer; fn = 50, fs = 1000)
 	# datos un array con las muestras
