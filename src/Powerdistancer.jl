@@ -4,7 +4,7 @@ module Powerdistancer
 include("init.jl")
 
 # Estructuras de datos.
-include("canales.jl")
+include(joinpath("RPP", "canales.jl"))
 
 # Lectura de archivos COMTRADE.
 include(joinpath("RPP", "comtrade.jl"))
