@@ -1,7 +1,7 @@
 """
 Funcion para obtener canales, la salida debe ser en unidades primarias (por ejemplo amperios, voltios, etc...).
 """
-function leer_canales(; path, conf = [1, 2, 3, 4, 5, 6], R1, X1, R0,X0 ,debug=true)
+function leer_canales(; path, conf = [1, 2, 3, 4, 5, 6], R1, X1, R0,X0 ,debug=false)
     comtrade = read_comtrade(path)
     #Nota: el comando read_comtrade ya toma en cuenta el factor de escalamiento "a" y de offset "b"
 
@@ -12,7 +12,8 @@ function leer_canales(; path, conf = [1, 2, 3, 4, 5, 6], R1, X1, R0,X0 ,debug=tr
     VSCodeServer.vscodedisplay(comtrade.dat) #Para ver los DataFramesst 
     =#
     frecuencia_muestreo = comtrade.cfg.samp[1]
-    va = Canal(comtrade.dat[!, 1+2], comtrade.cfg.A[conf[1], 5],frecuencia_muestreo)
+    #va = Canal(comtrade.dat[!, 1+2], comtrade.cfg.A[conf[1], 5],frecuencia_muestreo)
+#=    
     vb = Canal(comtrade.dat[!, 2+2], comtrade.cfg.A[conf[2], 5],frecuencia_muestreo)
     vc = Canal(comtrade.dat[!, 3+2], comtrade.cfg.A[conf[3], 5],frecuencia_muestreo)
     ia = Canal(comtrade.dat[!, 4+2], comtrade.cfg.A[conf[4], 5],frecuencia_muestreo)
@@ -21,8 +22,12 @@ function leer_canales(; path, conf = [1, 2, 3, 4, 5, 6], R1, X1, R0,X0 ,debug=tr
     tiempo_de_muestra = comtrade.dat[!, 2]
     #el tiempo en que se tomó cada muestra, empezando la muesta n = 1 en tiempo = 0 
     #la frecuencia se calcula usando el algoritmo que hizo DGM "alg_hfe.jl"
-
-
+ =#
+    nombres=["va","vb","vc","ia","ib","ic","ia2","ib2","ic2"]
+    for i in eachindex(conf)
+        @show nombres[i] = Canal(comtrade.dat[!, 1+2], comtrade.cfg.A[conf[i], 5],frecuencia_muestreo)
+        println(nombres[i])
+    end
     if debug
         println("nrates: $(comtrade.cfg.nrates)")
         println("samp: $(comtrade.cfg.samp)")
@@ -32,9 +37,10 @@ function leer_canales(; path, conf = [1, 2, 3, 4, 5, 6], R1, X1, R0,X0 ,debug=tr
         println("time: $(comtrade.cfg.time)")
         #println("triggertime-time: $(comtrade.cfg.triggertime - comtrade.cfg.time)")
     end
+    return[frecuencia_muestreo,va,vb]
     #return Sistema_trifasico_instanteneos(tiempo_de_muestra,va, vb, vc, ia, ib, ic, frecuencia, frecuencia_muestreo,R1,X1,R0,X0)
-    return [tiempo_de_muestra, va, vb, vc, ia, ib, ic, frecuencia_muestreo,R1,X1,R0,X0]
+    #return [tiempo_de_muestra, va, vb, vc, ia, ib, ic, frecuencia_muestreo,R1,X1,R0,X0]
 end
-leer_canales(path=ruta,R1=10,X1=3,R0=20,X0=3)
 
-
+#ruta = joinpath("data","comtrade","osc08p")
+#a = leer_canales(path = ruta, conf = [1,2,3,4,5,6], R1=10, X1=3, R0=20, X0=3)

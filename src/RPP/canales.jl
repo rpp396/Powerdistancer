@@ -5,7 +5,7 @@
     El valor está expresado en magnitudes físicas primarias.
 """
 struct Canal
-    valores::Number #vector de reales (valores instantáneos)
+    valores::Vector #vector de reales (valores instantáneos)
     unidad::String #Volt, Amper, Hz, etc...
     frecuencia_muestreo::Any #en Hz cantidad de muestras por segundos
     #a multiplicador del canal
