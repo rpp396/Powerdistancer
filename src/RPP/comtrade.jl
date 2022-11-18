@@ -36,3 +36,5 @@ function leer_canales(; path, conf = [1, 2, 3, 4, 5, 6], R1, X1, R0,X0 ,debug=tr
     return [tiempo_de_muestra, va, vb, vc, ia, ib, ic, frecuencia_muestreo,R1,X1,R0,X0]
 end
 leer_canales(path=ruta,R1=10,X1=3,R0=20,X0=3)
+
+
