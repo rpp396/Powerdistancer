@@ -36,6 +36,3 @@ function leer_canales(; path, conf=[1, 2, 3, 4, 5, 6], debug=true)
     return Sistema_trifasico_instanteneos(va, vb, vc, ia, ib, ic, frecuencia, frecuencia_muestreo)
     #return [va, vb, vc, ia, ib, ic, frecuencia_sistema, frecuencia_muestreo]
 end
-ruta = joinpath("data", "comtrade", "test")
-walkdir(ruta)
-a = leer_canales(path=ruta)
