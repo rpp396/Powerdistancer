@@ -7,8 +7,7 @@
 struct Canal
     valores::Number #vector de reales (valores instantáneos)
     unidad::String #Volt, Amper, Hz, etc...
-    #valores_fasor::Any #vector de complejos (valores RMS)
-    #frecuencia_muestreo::Any #en Hz cantidad de muestras por segundos
+    frecuencia_muestreo::Any #en Hz cantidad de muestras por segundos
     #a multiplicador del canal
     #b ofset del canal
     #uu unidades del canal
@@ -22,6 +21,7 @@ end
 abstract type Sistema_trifasico end
 
 struct Sistema_trifasico_fasores <: Sistema_trifasico
+    tiempo_de_muestra::Number
     va::Canal
     vb::Canal
     vc::Canal
@@ -30,9 +30,14 @@ struct Sistema_trifasico_fasores <: Sistema_trifasico
     ic::Canal
     frecuencia::Number
     frecuencia_muestreo::Number #en Hz cantidad de muestras por segundos
+    R1::Number
+    X1::Number
+    R0::Number
+    X0::Number
 end
 
 struct Sistema_trifasico_RMS <: Sistema_trifasico
+    tiempo_de_muestra::Number
     va::Canal
     vb::Canal
     vc::Canal
@@ -41,9 +46,14 @@ struct Sistema_trifasico_RMS <: Sistema_trifasico
     ic::Canal
     frecuencia::Number
     frecuencia_muestreo::Number #en Hz cantidad de muestras por segundos
+    R1::Number
+    X1::Number
+    R0::Number
+    X0::Number
 end
 
 struct Sistema_trifasico_instanteneos <: Sistema_trifasico
+    tiempo_de_muestra::Number
     va::Canal
     vb::Canal
     vc::Canal
@@ -52,4 +62,8 @@ struct Sistema_trifasico_instanteneos <: Sistema_trifasico
     ic::Canal
     frecuencia::Number
     frecuencia_muestreo::Number #en Hz cantidad de muestras por segundos
+    R1::Number
+    X1::Number
+    R0::Number
+    X0::Number
 end
