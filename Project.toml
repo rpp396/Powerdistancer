@@ -9,3 +9,6 @@ COMTRADE = "39eb2054-9c37-49d8-bb65-10e6baadba6c"
 DocStringExtensions = "ffbed154-4ef7-542d-bbb7-c09d3a79fcae"
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 Unitful = "1986cc42-f94f-5a68-af5c-568840ba703d"
+
+[compat]
+DocStringExtensions = "0.9"
