@@ -1,103 +1,57 @@
 
-# template de documentación para funciones exportadas
+abstract type FrequencyEstimator end # << tipo abstracto
+
+Base.@kwdef struct HFE <: FrequencyEstimator
+	fn = 50 # frecuencia nominal del sistema
+	gr = 9 # grado máximo del fitlro de promedio O cantidad de puntos a considerar para el promedio
+end
+
 
 """
-	mysearch(array::MyArray{T}, val::T; verbose=true) where {T} -> Int
+	Estimación de frecuencia
+ 
+	Se implementan algoritmos para determinar la frecuencia de la onda.
 
-Searches the `array` for the `val`. For some reason we don't want to use Julia's
-builtin search :)
-
-# Arguments
-- `array::MyArray{T}`: the array to search
-- `val::T`: the value to search for
-
-# Keywords
-- `verbose::Bool=true`: print out progress details
-
-# Returns
-- `Int`: the index where `val` is located in the `array`
-
-# Throws
-- `NotFoundError`: I guess we could throw an error if `val` isn't found.
+ $(TYPEDSIGNATURES)
+ 
 """
-# o
+estimate_frequency(datos::Vector, start::Integer, fs::Integer) = estimate_frequency(HFE(), datos, start, fs)
 
-"""
-	Manager(args...; kwargs...) -> Manager
-
-A cluster manager which spawns workers.
-
-# Arguments
-
-- `min_workers::Integer`: The minimum number of workers to spawn or an exception is thrown
-- `max_workers::Integer`: The requested number of workers to spawn
-
-# Keywords
-
-- `definition::AbstractString`: Name of the job definition to use. Defaults to the
-	definition used within the current instance.
-- `name::AbstractString`: ...
-- `queue::AbstractString`: ...
-"""
-# o
-"""
-	Manager(max_workers; kwargs...)
-	Manager(min_workers:max_workers; kwargs...)
-	Manager(min_workers, max_workers; kwargs...)
-
-A cluster manager which spawns workers.
-
-# Arguments
-
-- `min_workers::Int`: The minimum number of workers to spawn or an exception is thrown
-- `max_workers::Int`: The requested number of workers to spawn
-
-# Keywords
-
-- `definition::AbstractString`: Name of the job definition to use. Defaults to the
-	definition used within the current instance.
-- `name::AbstractString`: ...
-- `queue::AbstractString`: ...
-"""
-
-#= 
 """
 	Hybrid Frequency Estimator
  basado en [8887270](@cite)
 
  ahora trabajo con vectores pero la idea es usar la estructura que definamos para manejar los datos de las señales
  $(TYPEDSIGNATURES)
-
+ 
 """
-function hybrid_freq_est(datos, n::Integer; fn = 50, fs = 1000)
+function estimate_frequency(alg::HFE, datos::Vector, start::Integer, fs::Integer)
 	# datos un array con las muestras
-	# n en que indice del vector tengo que calcular la frecuencia
-	# fn frecuencia nominal del sistema
+	# start en que indice del vector tengo que calcular la frecuencia
 	# fs frecuencia de muestreo
-
+	fn = alg.fn
+	n = start # por cuestiones de implementación
 	ciclo = datos[n:Integer(n + ceil(fs / fn))]
-	display(plot(ciclo))
 	cruces = _NZC(ciclo)
 
 	f_est = length(cruces) >= 2 ? fs / ((cruces[2] - cruces[1]) * 2) : fn
 	f_i = f_est
 	grado = 1
 	error = 1 #valor inicial para comenzar bucle
-	while (error > 0.0005) & (grado < 9)
-		ciclo = DMF(datos[n:Integer(n + ceil(fs / fn) + grado + 1)], grado)
-		display(plot!(ciclo))
+	while (error > 0.0005) & (grado < alg.gr)
+		ciclo = _DMF(datos[n:Integer(n + ceil(fs / fn) + grado + 1)], grado)
 		cruces = _NZC(ciclo)
 		# println(cruces)
 		f_i = length(cruces) >= 2 ? fs / ((cruces[2] - cruces[1]) * 2) : f_i
 		error = abs(f_est - f_i)
-		println("grado ", grado, "   F_est ", f_est, "  f_i ", f_i)
+		#println("grado ", grado, "   F_est ", f_est, "  f_i ", f_i)
 		f_est = f_i
 		grado += 1
 	end
 	return f_est
 end
 
-using BasicInterpolators: CubicInterpolator
+# using BasicInterpolators: CubicInterpolator
 
 """
 	_NZC(ciclo)
@@ -163,4 +117,3 @@ function _DMF(datos, grado)
 	end
 	return new_datos
 end
- =#

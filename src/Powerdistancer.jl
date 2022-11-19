@@ -10,7 +10,7 @@ include(joinpath("RPP", "canales.jl"))
 include(joinpath("RPP", "comtrade.jl"))
 
 # Algoritmos.
-include(joinpath("DGM", "alg_hfe.jl"))
+include(joinpath("DGM", "AlgoritmosFrecuencia.jl"))
 
 # Metodos y tipos exportados.
 include("exports.jl")
