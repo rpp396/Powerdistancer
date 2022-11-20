@@ -19,20 +19,21 @@ function leer_canales(; path, conf=[1, 2, 3, 4, 5, 6], R1, X1, R0, X0, i2=false,
     VSCodeServer.vscodedisplay(comtrade.dat) #Para ver los DataFramesst 
     =#
     frecuencia_muestreo = comtrade.cfg.samp[1]
+    frecuencia = 50
+    tiempo_de_muestra = comtrade.dat[!, 2]
     va = Canal(comtrade.dat[!, conf[1]+2], comtrade.cfg.A[conf[1], 5], frecuencia_muestreo)
     vb = Canal(comtrade.dat[!, conf[2]+2], comtrade.cfg.A[conf[2], 5], frecuencia_muestreo)
     vc = Canal(comtrade.dat[!, conf[3]+2], comtrade.cfg.A[conf[3], 5], frecuencia_muestreo)
-    ia = Canal(comtrade.dat[!, conf[4]+2], comtrade.cfg.A[conf[4], 5], frecuencia_muestreo)
-    ib = Canal(comtrade.dat[!, conf[5]+2], comtrade.cfg.A[conf[5], 5], frecuencia_muestreo)
-    ic = Canal(comtrade.dat[!, conf[6]+2], comtrade.cfg.A[conf[6], 5], frecuencia_muestreo)
-    tiempo_de_muestra = comtrade.dat[!, 2]
-
     if i2
-        i2a = Canal(comtrade.dat[!, i2conf[1]+2], comtrade.cfg.A[i2conf[1], 5], frecuencia_muestreo)
-        i2b = Canal(comtrade.dat[!, i2conf[2]+2], comtrade.cfg.A[i2conf[2], 5], frecuencia_muestreo)
-        i2c = Canal(comtrade.dat[!, i2conf[3]+2], comtrade.cfg.A[i2conf[3], 5], frecuencia_muestreo)
+        ia = Canal(comtrade.dat[!, conf[4]+2] + comtrade.dat[!, i2conf[1]+2], comtrade.cfg.A[conf[4], 5], frecuencia_muestreo)
+        ib = Canal(comtrade.dat[!, conf[5]+2] + comtrade.dat[!, i2conf[2]+2], comtrade.cfg.A[conf[5], 5], frecuencia_muestreo)
+        ic = Canal(comtrade.dat[!, conf[6]+2] + comtrade.dat[!, i2conf[3]+2], comtrade.cfg.A[conf[6], 5], frecuencia_muestreo)
+    else
+        ia = Canal(comtrade.dat[!, conf[4]+2], comtrade.cfg.A[conf[4], 5], frecuencia_muestreo)
+        ib = Canal(comtrade.dat[!, conf[5]+2], comtrade.cfg.A[conf[5], 5], frecuencia_muestreo)
+        ic = Canal(comtrade.dat[!, conf[6]+2], comtrade.cfg.A[conf[6], 5], frecuencia_muestreo)
     end
-
+    #usar algorirmo de frecuencia para calcular
     #el tiempo en que se tomó cada muestra, empezando la muesta n = 1 en tiempo = 0 
     #la frecuencia se calcula usando el algoritmo que hizo DGM "alg_hfe.jl"
 
@@ -45,19 +46,13 @@ function leer_canales(; path, conf=[1, 2, 3, 4, 5, 6], R1, X1, R0, X0, i2=false,
         println("time: $(comtrade.cfg.time)")
         #println("triggertime-time: $(comtrade.cfg.triggertime - comtrade.cfg.time)")
     end
-    if i2
-        if debug
-            println("6 corrientes")
-        end
-        return [frecuencia_muestreo, va, vb, vc, ia, ib, ic, i2a, i2b, i2c]
-    end
-    return [frecuencia_muestreo, va, vb, vc, ia, ib, ic]
+    #return [frecuencia_muestreo, va, vb, vc, ia, ib, ic]
     #return Sistema_trifasico_instanteneos(tiempo_de_muestra,va, vb, vc, ia, ib, ic, frecuencia, frecuencia_muestreo,R1,X1,R0,X0)
     #return [tiempo_de_muestra, va, vb, vc, ia, ib, ic, frecuencia_muestreo,R1,X1,R0,X0]
+    return Sistema_trifasico_instanteneos(tiempo_de_muestra, va, vb, vc, ia, ib, ic, frecuencia, frecuencia_muestreo, R1, X1, R0, X0)
 end
 
-ruta = joinpath("data", "comtrade", "osc08p")
-a = Powerdistancer.leer_canales(path=ruta, conf=[1, 2, 3, 4, 5, 6], R1=10, X1=3, R0=20, X0=3)
-b = Powerdistancer.leer_canales(path=ruta, conf=[1, 2, 3, 4, 5, 6], R1=10, X1=3, R0=20, X0=3, i2=true, i2conf=[4, 5, 6], debug=true)
-z1 = read_comtrade(ruta)
-datos = z1.dat[!, 3]
+#ruta = joinpath("data", "comtrade", "osc08p")
+#a = Powerdistancer.leer_canales(path=ruta, conf=[1, 2, 3, 4, 5, 6], R1=10, X1=3, R0=20, X0=3)
+#b = Powerdistancer.leer_canales(path=ruta, conf=[1, 2, 3, 4, 5, 6], R1=10, X1=3, R0=20, X0=3, i2=true, i2conf=[4, 5, 6], debug=true)
+

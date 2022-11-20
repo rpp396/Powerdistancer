@@ -21,8 +21,7 @@ end
 abstract type Sistema_trifasico end
 
 struct Sistema_trifasico_fasores <: Sistema_trifasico
-    tiempo_de_muestra::Number
-    va::Canal
+    tiempo_de_muestra::Vector
     vb::Canal
     vc::Canal
     ia::Canal
@@ -37,8 +36,7 @@ struct Sistema_trifasico_fasores <: Sistema_trifasico
 end
 
 struct Sistema_trifasico_RMS <: Sistema_trifasico
-    tiempo_de_muestra::Number
-    va::Canal
+    tiempo_de_muestra::Vector
     vb::Canal
     vc::Canal
     ia::Canal
@@ -53,7 +51,7 @@ struct Sistema_trifasico_RMS <: Sistema_trifasico
 end
 
 struct Sistema_trifasico_instanteneos <: Sistema_trifasico
-    tiempo_de_muestra::Number
+    tiempo_de_muestra::Vector
     va::Canal
     vb::Canal
     vc::Canal
