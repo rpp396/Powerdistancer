@@ -5,7 +5,7 @@ path: ruta del archivo a comtrade a utilizar, por ejemlo joinpath("data","comtra
 conf: vector que contiene en que orden estan los canales: [va, vb, vc, ia, ib, ic]
 En el caso de contar con sumas de corrientes (interruptor y medio), se pasa el parametro i2=true y i2conf[posisción de i2a,posisción de i2b,posisción de i2c]
 ejemplo_3_corrientes = Powerdistancer.leer_canales(path=ruta, conf=[1, 2, 3, 4, 5, 6])
-ejemplo_3_corrientes = Powerdistancer.leer_canales(path=ruta, conf=[1, 2, 3, 4, 5, 6],i2=true, i2conf=[4, 5, 6])
+ejemplo_3_corr aientes = Powerdistancer.leer_canales(path=ruta, conf=[1, 2, 3, 4, 5, 6],i2=true, i2conf=[4, 5, 6])
 """
 function leer_canales(; path, conf=[1, 2, 3, 4, 5, 6], i2=false, i2conf=[7, 8, 9], debug=false)
     comtrade = read_comtrade(path)

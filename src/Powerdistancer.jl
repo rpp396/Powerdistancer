@@ -9,6 +9,9 @@ include(joinpath("RPP", "canales.jl"))
 # Lectura de archivos COMTRADE.
 include(joinpath("RPP", "comtrade.jl"))
 
+# Plotear sistema Sistema_trifasico.
+include(joinpath("RPP", "plotear.jl"))
+
 # Algoritmos.
 include(joinpath("DGM", "AlgoritmosFrecuencia.jl"))
 
