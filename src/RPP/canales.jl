@@ -29,10 +29,6 @@ struct Sistema_trifasico_fasores <: Sistema_trifasico
     ic::Canal
     frecuencia::Number
     frecuencia_muestreo::Number #en Hz cantidad de muestras por segundos
-    R1::Number
-    X1::Number
-    R0::Number
-    X0::Number
 end
 
 struct Sistema_trifasico_RMS <: Sistema_trifasico
@@ -44,10 +40,6 @@ struct Sistema_trifasico_RMS <: Sistema_trifasico
     ic::Canal
     frecuencia::Number
     frecuencia_muestreo::Number #en Hz cantidad de muestras por segundos
-    R1::Number
-    X1::Number
-    R0::Number
-    X0::Number
 end
 
 struct Sistema_trifasico_instanteneos <: Sistema_trifasico
@@ -60,8 +52,4 @@ struct Sistema_trifasico_instanteneos <: Sistema_trifasico
     ic::Canal
     frecuencia::Number
     frecuencia_muestreo::Number #en Hz cantidad de muestras por segundos
-    R1::Number
-    X1::Number
-    R0::Number
-    X0::Number
 end

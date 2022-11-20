@@ -2,13 +2,12 @@
 Funcion para obtener canales, la salida debe ser en unidades primarias (por ejemplo amperios, voltios, etc...)
 La funcion toma como parametros:
 path: ruta del archivo a comtrade a utilizar, por ejemlo joinpath("data","comtrade","osc08p"), no hay que incluir la extensión.
-conf: vector que contiene en que orden estan los canales: [va, vb, vc, ia, ib, ic, ia2, ib2, ic2], los canales terminados en 2 son para el caso que se sumen corrientes (interruptor y medio)
-R1: parte real de la impedancia de secuencia directa de la línea en valores primarios
-X1: parte imaginaria de la impedancia de secuencia directa de la línea en valores primarios
-R0: parte real de la impedancia de secuencia cero de la línea en valores primarios
-X0: parte imaginaria de la impedancia de secuencia cero de la línea en valores primarios
+conf: vector que contiene en que orden estan los canales: [va, vb, vc, ia, ib, ic]
+En el caso de contar con sumas de corrientes (interruptor y medio), se pasa el parametro i2=true y i2conf[posisción de i2a,posisción de i2b,posisción de i2c]
+ejemplo_3_corrientes = Powerdistancer.leer_canales(path=ruta, conf=[1, 2, 3, 4, 5, 6])
+ejemplo_3_corrientes = Powerdistancer.leer_canales(path=ruta, conf=[1, 2, 3, 4, 5, 6],i2=true, i2conf=[4, 5, 6])
 """
-function leer_canales(; path, conf=[1, 2, 3, 4, 5, 6], R1, X1, R0, X0, i2=false, i2conf=[7, 8, 9], debug=false)
+function leer_canales(; path, conf=[1, 2, 3, 4, 5, 6], i2=false, i2conf=[7, 8, 9], debug=false)
     comtrade = read_comtrade(path)
     #Nota: el comando read_comtrade ya toma en cuenta el factor de escalamiento "a" y de offset "b"
 
@@ -16,7 +15,7 @@ function leer_canales(; path, conf=[1, 2, 3, 4, 5, 6], R1, X1, R0, X0, i2=false,
     comandos utiles
     VSCodeServer.vscodedisplay(comtrade.cfg.A) #Para ver los DataFrames
     VSCodeServer.vscodedisplay(comtrade.cfg.D) #Para ver los DataFrames
-    VSCodeServer.vscodedisplay(comtrade.dat) #Para ver los DataFramesst 
+    VSCodeServer.vscodedisplay(comtrade.dat) #Para ver los DataFrames 
     =#
     frecuencia_muestreo = comtrade.cfg.samp[1]
     frecuencia = 50
@@ -46,13 +45,10 @@ function leer_canales(; path, conf=[1, 2, 3, 4, 5, 6], R1, X1, R0, X0, i2=false,
         println("time: $(comtrade.cfg.time)")
         #println("triggertime-time: $(comtrade.cfg.triggertime - comtrade.cfg.time)")
     end
-    #return [frecuencia_muestreo, va, vb, vc, ia, ib, ic]
-    #return Sistema_trifasico_instanteneos(tiempo_de_muestra,va, vb, vc, ia, ib, ic, frecuencia, frecuencia_muestreo,R1,X1,R0,X0)
-    #return [tiempo_de_muestra, va, vb, vc, ia, ib, ic, frecuencia_muestreo,R1,X1,R0,X0]
-    return Sistema_trifasico_instanteneos(tiempo_de_muestra, va, vb, vc, ia, ib, ic, frecuencia, frecuencia_muestreo, R1, X1, R0, X0)
+    return Sistema_trifasico_instanteneos(tiempo_de_muestra, va, vb, vc, ia, ib, ic, frecuencia, frecuencia_muestreo)
 end
 
 #ruta = joinpath("data", "comtrade", "osc08p")
-#a = Powerdistancer.leer_canales(path=ruta, conf=[1, 2, 3, 4, 5, 6], R1=10, X1=3, R0=20, X0=3)
-#b = Powerdistancer.leer_canales(path=ruta, conf=[1, 2, 3, 4, 5, 6], R1=10, X1=3, R0=20, X0=3, i2=true, i2conf=[4, 5, 6], debug=true)
+#a = Powerdistancer.leer_canales(path=ruta, conf=[1, 2, 3, 4, 5, 6])
+#b = Powerdistancer.leer_canales(path=ruta, conf=[1, 2, 3, 4, 5, 6],i2=true, i2conf=[4, 5, 6], debug=true)
 
