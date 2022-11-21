@@ -2,5 +2,5 @@
 
 
 ```@docs
-hybrid_freq_est
+estimate_frequency
 ```
