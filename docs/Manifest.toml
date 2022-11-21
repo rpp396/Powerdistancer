@@ -405,3 +405,11 @@ version = "1.48.0+0"
 deps = ["Artifacts", "Libdl"]
 uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 version = "17.4.0+0"
+
+[[deps.COMTRADE]]
+deps = ["CSV", "DataFrames"]
+git-tree-sha1 = "100454348ae80c96d37dccf5fa2662d1d0ee3a7b"
+repo-rev = "master"
+repo-url = "https://github.com/rpp396/COMTRADE.jl"
+uuid = "39eb2054-9c37-49d8-bb65-10e6baadba6c"
+version = "0.1.1"
