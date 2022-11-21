@@ -18,7 +18,7 @@ end
 estimate_frequency(datos::Vector, start::Integer, fs::Integer) = estimate_frequency(HFE(), datos, start, fs)
 
 """
-	Hybrid Frequency Estimator
+	Algoritmo "Hybrid Frequency Estimator"
  basado en [8887270](@cite)
 
  ahora trabajo con vectores pero la idea es usar la estructura que definamos para manejar los datos de las señales
@@ -47,6 +47,11 @@ function estimate_frequency(alg::HFE, datos::Vector, start::Integer, fs::Integer
 		#println("grado ", grado, "   F_est ", f_est, "  f_i ", f_i)
 		f_est = f_i
 		grado += 1
+	end
+	if abs(fn - f_est) / fn > 0.1
+		# no admito variaciones de mas de 10% en la frecuencia nominal
+		# si eso sucede, devuelvo la nominal
+		f_est = fn
 	end
 	return f_est
 end

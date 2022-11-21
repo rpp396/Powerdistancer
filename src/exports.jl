@@ -1,1 +1,1 @@
-export leer_canales, estimate_frequency, generarSeno
+export leer_canales, estimate_frequency, generarSeno, HFE

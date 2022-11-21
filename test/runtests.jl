@@ -1,20 +1,20 @@
 using Test, Powerdistancer
 
-include("lectura.jl")
+#include("lectura.jl")
 
 @testset "Funciones Rodrigo" begin
-    # include("arithmetic.jl")
-    # include("utils.jl")
+	# include("arithmetic.jl")
+	# include("utils.jl")
 end
 
-@testset "Funciones Daniel" begin
-    # include("arithmetic.jl")
-    # include("utils.jl")
+@testset verbose = true "Funciones Daniel" begin
+	include("frecuencia.jl")
+	# include("utils.jl")
 end
 
 @testset "Funciones generales" begin
-    # include("arithmetic.jl")
-    # include("utils.jl")
+	# include("arithmetic.jl")
+	# include("utils.jl")
 end
 
 #@test Powerdistancer.f() == 1
