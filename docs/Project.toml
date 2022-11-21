@@ -1,5 +1,6 @@
 [deps]
 BasicInterpolators = "26cce99e-4866-4b6d-ab74-862489e035e0"
+COMTRADE = "39eb2054-9c37-49d8-bb65-10e6baadba6c"
 DocStringExtensions = "ffbed154-4ef7-542d-bbb7-c09d3a79fcae"
 Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
 DocumenterCitations = "daee34ce-89f3-4625-b898-19384cb65244"
