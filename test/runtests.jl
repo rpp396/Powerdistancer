@@ -9,6 +9,7 @@ end
 
 @testset verbose = true "Funciones Daniel" begin
 	include("frecuencia.jl")
+	include("rms.jl")
 	# include("utils.jl")
 end
 
