@@ -30,7 +30,7 @@ function estimate_frequency(alg::FE_HFE, datos::Vector, start::Integer, fs::Inte
 	# fs frecuencia de muestreo
 	fn = alg.fn
 	n = start # por cuestiones de implementación
-	ciclo = datos[n:Integer(n + ceil(fs / fn))]
+	ciclo = datos[n:Integer(n + ceil(1.5 * fs / fn))] #agrego medio cilco mas
 	cruces = _NZC(ciclo)
 
 	f_est = length(cruces) >= 2 ? fs / ((cruces[2] - cruces[1]) * 2) : fn
@@ -38,7 +38,7 @@ function estimate_frequency(alg::FE_HFE, datos::Vector, start::Integer, fs::Inte
 	grado = 1
 	error = 1 #valor inicial para comenzar bucle
 	while (error > 0.0005) & (grado < alg.gr)
-		ciclo = _DMF(datos[n:Integer(n + ceil(fs / fn) + grado + 1)], grado)
+		ciclo = _DMF(datos[n:Integer(n + ceil(1.5 * fs / fn) + grado + 1)], grado)
 		cruces = _NZC(ciclo)
 		# println(cruces)
 		f_i = length(cruces) >= 2 ? fs / ((cruces[2] - cruces[1]) * 2) : f_i
