@@ -23,4 +23,6 @@ include(joinpath("DGM", "CalculoRMS.jl"))
 # Metodos y tipos exportados.
 include("exports.jl")
 
+# Interfaces
+include("interface.jl")
 end # module
