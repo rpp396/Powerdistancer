@@ -1,7 +1,7 @@
 
 abstract type FrequencyEstimator end # << tipo abstracto
 
-Base.@kwdef struct HFE <: FrequencyEstimator
+Base.@kwdef struct FE_HFE <: FrequencyEstimator
 	fn = 50 # frecuencia nominal del sistema
 	gr = 9 # grado máximo del fitlro de promedio O cantidad de puntos a considerar para el promedio
 end
@@ -15,17 +15,16 @@ end
  $(TYPEDSIGNATURES)
  
 """
-estimate_frequency(datos::Vector, start::Integer, fs::Integer) = estimate_frequency(HFE(), datos, start, fs)
+estimate_frequency(datos::Vector, start::Integer, fs::Integer) = estimate_frequency(FE_HFE(), datos, start, fs)
 
 """
 	Algoritmo "Hybrid Frequency Estimator"
  basado en [8887270](@cite)
 
- ahora trabajo con vectores pero la idea es usar la estructura que definamos para manejar los datos de las señales
- $(TYPEDSIGNATURES)
+$(TYPEDSIGNATURES)
  
 """
-function estimate_frequency(alg::HFE, datos::Vector, start::Integer, fs::Integer)
+function estimate_frequency(alg::FE_HFE, datos::Vector, start::Integer, fs::Integer)
 	# datos un array con las muestras
 	# start en que indice del vector tengo que calcular la frecuencia
 	# fs frecuencia de muestreo
@@ -62,8 +61,10 @@ end
 	_NZC(ciclo)
 
 	Dado un vector de muestras, devuelve un vector de los cruces por cero.
-	El algoritmo hace una eliminación de la componente continua (valida para tamaño de muestra de pocos ciclos).
-	Los índices devueltos como resultado son fraccionarios pues la función realiza una estimación polinomial del cruce por cero.
+	El algoritmo hace una eliminación de la componente continua (valida para 
+	tamaño de muestra de pocos ciclos).
+	Los índices devueltos como resultado son fraccionarios pues la función realiza una 
+	estimación polinomial del cruce por cero.
 
 """
 function _NZC(ciclo)
@@ -108,7 +109,8 @@ end
 """
 	_DMF(datos,grado)
 
-	Dado un vector con muestras de una señal, se devulve la señal filtrada con un filtro de promedio de grado "grado".
+	Dado un vector con muestras de una señal, se devuelve la señal filtrada 
+	con un filtro de promedio de grado "grado".
 	El vector de salida tiene largo menor al vector de entrada, en (grado-1) elementos.
 """
 function _DMF(datos, grado)

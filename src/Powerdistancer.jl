@@ -17,6 +17,8 @@ include(joinpath("RPP", "plotear.jl"))
 
 # Algoritmos.
 include(joinpath("DGM", "AlgoritmosFrecuencia.jl"))
+include(joinpath("DGM", "AlgoritmosLazoDeFalta.jl"))
+include(joinpath("DGM", "CalculoRMS.jl"))
 
 # Metodos y tipos exportados.
 include("exports.jl")
