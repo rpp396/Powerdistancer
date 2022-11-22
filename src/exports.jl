@@ -1,3 +1,4 @@
+
 export leer_canales, generarSeno,
 
 	# del estimador de frecuencia
@@ -10,5 +11,3 @@ export leer_canales, generarSeno,
 
 	# del calculo de rms
 	rms_calculation
-
-

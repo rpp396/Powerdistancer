@@ -9,6 +9,9 @@ include(joinpath("RPP", "canales.jl"))
 # Lectura de archivos COMTRADE.
 include(joinpath("RPP", "comtrade.jl"))
 
+# Aplicar FFT a los canales del sistema trifásico.
+include(joinpath("RPP", "FFT.jl"))
+
 # Plotear sistema Sistema_trifasico.
 include(joinpath("RPP", "plotear.jl"))
 
