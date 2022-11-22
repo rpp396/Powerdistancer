@@ -20,9 +20,17 @@ function rms_calculation(sis::Sistema_trifasico_instanteneos)::Sistema_trifasico
 	return Sistema_trifasico_RMS(sis.tiempo_de_muestra, va, vb, vc, ia, ib, ic, fn, sis.frecuencia_muestreo)
 end
 
-# funcion interna para el calculo del RMS a una señal solamente
-# los valores de RMS del último ciclo no se pueden calcular, se completa con el ultimo valor conocido para mantener tamaño
+"""
+	Interna
+
+Realiza el cálculo del RMS a una señal, completa los datos correspondientes al 
+último cilco con el último valor calculado.
+$(TYPEDSIGNATURES)
+"""
 function _RMS_signal(x::Canal, fn::Number)::Canal
+	# funcion interna para el calculo del RMS a una señal solamente
+	# los valores de RMS del último ciclo no se pueden calcular, se completa con el ultimo valor conocido para mantener tamaño
+
 	P = x.frecuencia_muestreo / fn
 	N = trunc(Int64, P)
 	δ = P - N
