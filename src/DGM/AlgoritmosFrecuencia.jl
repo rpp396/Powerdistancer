@@ -30,6 +30,11 @@ function estimate_frequency(alg::FE_HFE, datos::Vector, start::Integer, fs::Inte
 	# fs frecuencia de muestreo
 	fn = alg.fn
 	n = start # por cuestiones de implementación
+
+	#verificaciones 
+	@assert fs / fn > 10 "Error, la frecuncia de muestreo $fs debe ser al menos 10 veces mayor a la nominal $fn"
+	@assert length(datos) > (2 * fs / fn) "Error, el vector de datos no tiene suficientes datos"
+	@assert length(datos) > (n + 1.5 * fs / fn) "Error, el punto de inicio ($n) debe ser menor"
 	ciclo = datos[n:Integer(n + ceil(1.5 * fs / fn))] #agrego medio cilco mas
 	cruces = _NZC(ciclo)
 
