@@ -9,9 +9,10 @@ using Test, Powerdistancer
 end
 
 @testset verbose = true "Funciones Daniel" begin
-    include("frecuencia.jl")
-    include("rms.jl")
-    # include("utils.jl")
+	include("frecuencia.jl")
+	include("rms.jl")
+	include("tipofalta.jl")
+	# include("utils.jl")
 end
 
 @testset "Funciones generales" begin
