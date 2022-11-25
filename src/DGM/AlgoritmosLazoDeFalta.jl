@@ -1,20 +1,4 @@
-# 
-# 
-# tiempo de falta y loop de falta
-# Realtime_fault_detection_and_classification_in_power_systems_using_microprocessors
-# este trabaja con los fasores así que voy a esperar a que termine Rodrigo
-# voy a implementar otro método mas simple para seguir avanzando
 
-abstract type TimeFaultEstimator end # << tipo abstracto
-
-Base.@kwdef struct TF_DUMMY <: TimeFaultEstimator
-	# algoritmo dummy
-	tf = 1 # tiempo de ocurrencia de la falta
-end
-
-# algoritmo que analiza componentes de Park de tensiones y corrientes
-Base.@kwdef struct TF_ALG1 <: TimeFaultEstimator
-end
 
 """
 	Estimación de instante de tiempo de comienzo de la falta
@@ -25,9 +9,7 @@ end
  $(TYPEDSIGNATURES)
  
 """
-estimate_time_fault(sis_i::Sistema_trifasico_instanteneos, sis_f::Sistema_trifasico_fasores, sis_rms::Sistema_trifasico_RMS) = estimate_time_fault(HFE(), sis_i, sis_f, sis_rms)
-
-
+estimate_time_fault(sis_i::Sistema_trifasico_instanteneos, sis_f::Sistema_trifasico_fasores, sis_rms::Sistema_trifasico_RMS) = estimate_time_fault(TF_ALG1(), sis_i, sis_f, sis_rms)
 
 #	Algoritmo "Dummy"
 # metodo para continuar con el desarrollo de otras partes del módulo
@@ -36,11 +18,18 @@ function estimate_time_fault(alg::TF_DUMMY, sis_i::Sistema_trifasico_instanteneo
 	return alg.tf
 end
 
+"""
+	Estimación de instante de tiempo de comienzo de la falta - Algoritmo 1
+ 
+	Este algoritmo utiliza la transformación de Park del sitema de tensiones y del sitema 
+	de corrientes, analiza los cambios y evalua que sea el comienzo de una falta.
 
-
-#	Algoritmo tipo 1
-# utiliza descomoposición de Park
+ $(TYPEDSIGNATURES)
+ 
+"""
 function estimate_time_fault(alg::TF_ALG1, sis_i::Sistema_trifasico_instanteneos, sis_f::Sistema_trifasico_fasores, sis_rms::Sistema_trifasico_RMS)
+	#	Algoritmo tipo 1
+	# utiliza descomoposición de Park
 	f=sis_i.frecuencia; fs=sis_i.frecuencia_muestreo
 	# matriz para el calculo de transformada de Clarke
 	TC=sqrt(2/3).*[sqrt(2)/2 sqrt(2)/2 sqrt(2)/2; 1 -1/2 -1/2; 0 sqrt(3)/2 -sqrt(3)/2]
@@ -141,6 +130,69 @@ function estimate_time_fault(alg::TF_ALG1, sis_i::Sistema_trifasico_instanteneos
 	
 	return tf
 end
+
+"""
+	Estimación de loop de falta o fases que intervienen en el defecto
+ 
+	Se implementan algoritmos para determinar  que fases intervienen en el defecto
+	tomando como referencia el tiempo de falta calculado.
+
+ $(TYPEDSIGNATURES)
+ 
+"""
+fault_loop(sis_i::Sistema_trifasico_instanteneos, sis_f::Sistema_trifasico_fasores, sis_rms::Sistema_trifasico_RMS, tf::Number) = fault_loop(LF_ALG2(), sis_i, sis_f, sis_rms,tf)
+
+"""
+	Estimación de loop de falta - Algoritmo 2
+ 
+	Este algoritmo define una suma acumulada de las señales en el tiempo para determinar 
+	que ocurrió un evento, luego se clasifica en función de las señales intervinientes.
+Se basa en el trabajo [4391032](@cite)
+
+ $(TYPEDSIGNATURES)
+ 
+"""
+function fault_loop(alg::LF_ALG2, sis_i::Sistema_trifasico_instanteneos, sis_f::Sistema_trifasico_fasores, sis_rms::Sistema_trifasico_RMS, tf::Number) 
+
+	# dado un tiempo de falta, voy a analizar 2,5 ciclos hacia atras para tomar valores prefalta
+	ktf=ceil(Int64,tf*sis_i.frecuencia_muestreo) # determino posición en vector de datos
+	N=ceil(Int64, sis_i.frecuencia_muestreo/sis_i.frecuencia) # determino ancho en muestras de un ciclo
+	h=alg.h
+	v=alg.v
+	
+	# comienzo a analizar el loop de falta 1/2 cilcos desde el tiempo de falta detectado
+	(iagk_1,iagk_2)=(0,0);(ibgk_1,ibgk_2)=(0,0);(icgk_1,icgk_2)=(0,0);(ingk_1,ingk_2)=(0,0);
+
+	falta=0b0000  # binario donde voy a ir marcando la corriente detectada, orden de los bits (ia,ib,ic,in)
+	k=ceil(Int64,ktf-0.5*N) # arrnaco medio ciclo antes del tiempo de falta dado
+	kexit=length(sis_i.ia.valores)
+	resumir=false  # indica que va a salir en un ciclo
+	while (k<kexit)
+		
+		#calculo señales de CUSUM
+		iagk_1 = maximum([iagk_1+sis_i.ia.valores[k]-v,0])
+		iagk_2 = maximum([iagk_2-sis_i.ia.valores[k]-v,0])
+		ibgk_1 = maximum([ibgk_1+sis_i.ib.valores[k]-v,0])
+		ibgk_2 = maximum([ibgk_2-sis_i.ib.valores[k]-v,0])
+		icgk_1 = maximum([icgk_1+sis_i.ic.valores[k]-v,0])
+		icgk_2 = maximum([icgk_2-sis_i.ic.valores[k]-v,0])
+		in=sis_i.ia.valores[k]+sis_i.ib.valores[k]+sis_i.ic.valores[k]
+		ingk_1 = maximum([ingk_1+in-v*0.5,0])
+		ingk_2 = maximum([ingk_2-in-v*0.5,0])
+		
+		((iagk_1 > h*v) | (iagk_2 > h*v)) &&  (falta |= 0b1000)
+		((ibgk_1 > h*v) | (ibgk_2 > h*v)) &&  (falta |= 0b0100)
+		((icgk_1 > h*v) | (icgk_2 > h*v)) &&  (falta |= 0b0010)
+		((ingk_1 > h*v*0.5) | (ingk_2 > h*v*0.5)) &&  (falta |= 0b0001)
+		#println("k : $k, kexit = $kexit,  falta : ",bitstring(Int8(falta)))
+		#println("ia-> g1= $iagk_1  y g2= $iagk_2")
+		((falta != 0) & !resumir) && (kexit=k+N+1; resumir=true)   # si ya detecté una corriente, espero 1 ciclo mas y salgo
+		k+=1
+	end
+	@assert !((falta == 0b0001) | (falta==0b0010) | (falta==0b0100) | (falta==0b1000) ) "Error, no se pudo determinal el lazo de falta"
+	return TiposFalta(falta)
+end
+
 
 #dummy fasores
 function sis_fasor()
