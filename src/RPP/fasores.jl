@@ -1,54 +1,37 @@
-using Powerdistancer
-ruta = joinpath("data", "Comtrade", "osc04p") #falta AN
-sistema = leer_canales(path=ruta)
-f = sistema.frecuencia
-fs = sistema.frecuencia_muestreo
-t0 = 0
-tmax = ((length(sistema.ia.valores)) / fs) - 1 / fs
-t = 0.02:1/fs:0.04
-FFT = Powerdistancer.fft(señal[1:100])
-F = Powerdistancer.fftshift(FFT)
-freqs = Powerdistancer.fftshift(Powerdistancer.fftfreq(length(señal), fs))
-#= for i in 1:100:1001
-    println(FFT[i])
-end =#
+function calcularFasoresSeñal(señal, frecuencia, frecuencia_muestreo, debug=false) #Calcula fasores de un Canal
+    anchoVentana = trunc(Int, round(frecuencia_muestreo / frecuencia))
 
-#calculo el ancho de ventana para un ciclo y lo paso a int para iterar
-anchoVentana = trunc(Int, round(sistema.frecuencia_muestreo / sistema.frecuencia))
-function generarSeno(; duracion=5, f=50, fs=10000, valorPico=1)
-    # duración en segundos
-    # f y fs en Hz.  
-    # f frecuencia de la señal periódica
-    # fs frecuencia de muestreo
-    # valorPico es la máxima amplitud
-    #
+    listaFrecuencias = fftfreq(anchoVentana, frecuencia_muestreo)
 
-    v = Vector{Float64}()
-    for i = 1:(duracion*fs)
-        push!(v, valorPico * sin(f * 2 * pi * (i-1) / (fs)))
+    listaFrecuenciasFloat = collect(listaFrecuencias)#para que sea un vector de Float64
+
+    for i in eachindex(listaFrecuenciasFloat) #para redondear a 50Hz o 60Hz y encontrar el indice de la frecuencia correspondiente
+        listaFrecuenciasFloat[i] = round(listaFrecuenciasFloat[i])
     end
-    return v
+
+    indiceFundamental = findfirst(x -> x == 50.0 || x == 60.0, listaFrecuenciasFloat) #Encuentro el indice de la frecuencia fundamental
+
+    fasores = Vector{Complex}()
+    i = 1
+    while (i + anchoVentana - 1) <= length(señal) #ventana movil de ancho anchoVentana
+        #=         println("i inicial: $i")
+                println("i final: $(i+anchoVentana-1)") =#
+        push!(fasores, fft(señal[i:i+anchoVentana-1])[indiceFundamental] / (anchoVentana / 2))
+        i += 1
+    end
+    return fasores .* 1im #roto los fasores 90 grados para que coincidan con los visores de COMTRADE
 end
 
-seno = generarSeno(duracion=0.8, f=52, fs=5000, valorPico=1)
-FFT = Powerdistancer.fft(seno[1:100])
-Powerdistancer.fftfreq(1000, 10)
-Powerdistancer.fftfreq(1000, 10)[anchoVentana]
-F = Powerdistancer.fftshift(FFT)
-anchoVentana=100
-for i = 1:anchoVentana:3500
-    #=    println(i)
-       println(i+99)
-     =#
-    @show i
-    @show i+anchoVentana-1
-    println("tiempo: $(i/5000)")
-    @show anchoVentana = 100
-    @show FFT = Powerdistancer.fft(seno[i:(i+anchoVentana-1)])[2]/(anchoVentana/2)
-    @show anchoVentana = 200
-    @show FFT = Powerdistancer.fft(seno[i:(i+anchoVentana-1)])[3]/(anchoVentana/2)
-end
+function calcularFasoresSistema(sistema::Sistema_trifasico_instanteneos)
+    tiempo_de_muestra = sistema.tiempo_de_muestra
+    frecuencia = sistema.frecuencia
+    frecuencia_muestreo = sistema.frecuencia_muestreo
+    va = Canal_complejo(calcularFasoresSeñal(sistema.va.valores, frecuencia, frecuencia_muestreo), sistema.va.unidad, sistema.va.frecuencia_muestreo)
+    vb = Canal_complejo(calcularFasoresSeñal(sistema.vb.valores, frecuencia, frecuencia_muestreo), sistema.vb.unidad, sistema.vb.frecuencia_muestreo)
+    vc = Canal_complejo(calcularFasoresSeñal(sistema.vc.valores, frecuencia, frecuencia_muestreo), sistema.vc.unidad, sistema.vc.frecuencia_muestreo)
+    ia = Canal_complejo(calcularFasoresSeñal(sistema.ia.valores, frecuencia, frecuencia_muestreo), sistema.ia.unidad, sistema.ia.frecuencia_muestreo)
+    ib = Canal_complejo(calcularFasoresSeñal(sistema.ib.valores, frecuencia, frecuencia_muestreo), sistema.ib.unidad, sistema.ib.frecuencia_muestreo)
+    ic = Canal_complejo(calcularFasoresSeñal(sistema.ic.valores, frecuencia, frecuencia_muestreo), sistema.ic.unidad, sistema.ic.frecuencia_muestreo)
 
-anchoVentana = 10
-fs = 5000.0
-Powerdistancer.fftfreq(anchoVentana, fs)[trunc(Int,anchoVentana/2)-1:1:trunc(Int,anchoVentana/2)+1]
+    return Sistema_trifasico_fasores(tiempo_de_muestra, va, vb, vc, ia, ib, ic, frecuencia, frecuencia_muestreo)
+end
