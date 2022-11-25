@@ -2,17 +2,17 @@ Z1->    R1=9.477	X1=29.104
 Z0->	R0=24.75	X0=94.100		
 				
 Nombre Osc	tipo falta	tiempo falta	distancia	Rf
-Osc01	        BCN		                    5%	    0
-Osc02	        ABC		                    5%	    0
-Osc03	        ABCN	                    5%	    0
-Osc04	        AN		                    10%	    0
-Osc05	        AB		                    20%	    0
-Osc06	        BN		                    50%	    0
-Osc07	        CA		                    85%	    0
-Osc08	        CN		                    90%	    0
-Osc09	        ABN		                    95%	    0
-Osc10	        ABC		                    95%	    0
-Osc11	        ABCN	                    95%	    0
-Osc12	        ABCN	                    5%	    20
-Osc13	        BN		                    90%	    20
-Osc14	        ACN		                    95%	    20
+Osc01	        BCN		     310ms          5%	    0
+Osc02	        ABC		     305ms          5%	    0
+Osc03	        ABCN	     305ms          5%	    0
+Osc04	        AN		     305ms          10%	    0
+Osc05	        AB		     323.2ms        20%	    0
+Osc06	        BN		     311.6ms        50%	    0
+Osc07	        CA		     316.6ms        85%	    0
+Osc08	        CN		     318.2ms        90%	    0
+Osc09	        ABN		     323.2ms        95%	    0
+Osc10	        ABC		     305ms          95%	    0
+Osc11	        ABCN	     305ms          95%	    0
+Osc12	        ABCN	     305ms          5%	    20
+Osc13	        BN		     311.6ms        90%	    20
+Osc14	        ACN		     316.6ms        95%	    20

@@ -26,12 +26,12 @@ include("generarSeno.jl")
 	ic_ok = generarSeno(duracion = 5 / f, f = f, fs = fs, fase = 10 + 120, valorPico = 300)
 
 	#corrientes altas
-	ia_toc = generarSeno(duracion = 1 / f, f = f, fs = fs, fase = 15, valorPico = 300, valorPico_fin = 500)
-	ib_toc = generarSeno(duracion = 1 / f, f = f, fs = fs, fase = 15 - 120, valorPico = 300, valorPico_fin = 500)
-	ic_toc = generarSeno(duracion = 1 / f, f = f, fs = fs, fase = 15 + 120, valorPico = 300, valorPico_fin = 500)
-	ia_oc = generarSeno(duracion = 4 / f, f = f, fs = fs, fase = 15, valorPico = 500)
-	ib_oc = generarSeno(duracion = 4 / f, f = f, fs = fs, fase = 15 - 120, valorPico = 500)
-	ic_oc = generarSeno(duracion = 4 / f, f = f, fs = fs, fase = 15 + 120, valorPico = 500)
+	ia_toc = generarSeno(duracion = 1 / f, f = f, fs = fs, fase = 10, valorPico = 300, valorPico_fin = 500)
+	ib_toc = generarSeno(duracion = 1 / f, f = f, fs = fs, fase = 10 - 120, valorPico = 300, valorPico_fin = 500)
+	ic_toc = generarSeno(duracion = 1 / f, f = f, fs = fs, fase = 10 + 120, valorPico = 300, valorPico_fin = 500)
+	ia_oc = generarSeno(duracion = 4 / f, f = f, fs = fs, fase = 10, valorPico = 500)
+	ib_oc = generarSeno(duracion = 4 / f, f = f, fs = fs, fase = 10 - 120, valorPico = 500)
+	ic_oc = generarSeno(duracion = 4 / f, f = f, fs = fs, fase = 10 + 120, valorPico = 500)
 
 
 	#corriente con falta
