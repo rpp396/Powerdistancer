@@ -15,7 +15,7 @@ end
  $(TYPEDSIGNATURES)
  
 """
-estimate_frequency(datos::Vector, start::Integer, fs::Integer) = estimate_frequency(FE_HFE(), datos, start, fs)
+estimate_frequency(datos::Vector, start::Integer, fs::Number) = estimate_frequency(FE_HFE(), datos, start, fs)
 
 """
 	Algoritmo "Hybrid Frequency Estimator"
@@ -24,7 +24,7 @@ estimate_frequency(datos::Vector, start::Integer, fs::Integer) = estimate_freque
 $(TYPEDSIGNATURES)
  
 """
-function estimate_frequency(alg::FE_HFE, datos::Vector, start::Integer, fs::Integer)
+function estimate_frequency(alg::FE_HFE, datos::Vector, start::Integer, fs::Number)
 	# datos un array con las muestras
 	# start en que indice del vector tengo que calcular la frecuencia
 	# fs frecuencia de muestreo

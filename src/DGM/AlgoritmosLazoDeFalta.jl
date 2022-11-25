@@ -146,7 +146,7 @@ fault_loop(sis_i::Sistema_trifasico_instanteneos, sis_f::Sistema_trifasico_fasor
 	Estimación de loop de falta - Algoritmo 2
  
 	Este algoritmo define una suma acumulada de las señales en el tiempo para determinar 
-	que ocurrió un evento, luego se clasifica en función de las señales intervinientes.
+	que ocurrió un evento, luego se clasifica en función de las señales intervinientes. 
 Se basa en el trabajo [4391032](@cite)
 
  $(TYPEDSIGNATURES)

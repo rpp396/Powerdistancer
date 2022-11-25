@@ -14,11 +14,12 @@ function calc_distance_1end(archivo::String; orden_canales = [1, 2, 3, 4, 5, 6],
 	#calcula distancia de falta segun comtrade dado
 
 	sis_i = leer_canales(path = archivo, conf = orden_canales)
-	#sis_f= xxxx
+	sis_f = calcularFasoresSistema(sis_i)
 	sis_rms = rms_calculation(sis_i)
 	tf = estimate_time_fault(Alg_fault_time, sis_i, sis_f, sis_rms)
 	@assert tf > 0 "Error, no se detectó tiempo de comienzo de falta"
 	lf = fault_loop(Alg_fault_loop, sis_i, sis_f, sis_rms, tf)
 	@assert lf == F_sin_falta "Error, no se detecto loop de falta"
 	distancia = distance_1end(Alg_distancia, sis_i, sis_f, sis_rms, tf, lf)
+	return distancia
 end

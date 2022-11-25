@@ -1,4 +1,6 @@
 # pruebas de los algoritmos de cálculo de frecuencia
+
+
 @testset verbose = true "Pruebas de algoritmos de determinacion de frecuencia" begin
 
 	casos = [(50, 1000, 9), (63, 1000, 9), (77, 5000, 9), (45, 10000, 16)]
@@ -59,6 +61,14 @@
 		s2 = 0.13 .* map(x -> sin(2π * x * f), t...)
 		sh = s .+ s1 .+ s2
 		@test estimate_frequency(FE_HFE(fn = f / 3, gr = g), sh, Int64(round(1 + rand() * length(t))), fs) ≈ (f / 3) rtol = 0.05
+	end
 
+end
+
+@testset verbose = true "Pruebas de algoritmos de determinacion de frecuencia contra simulaciones" begin
+	@testset "Simulación $i" for i in keys(CasoSimulado)
+		ruta = joinpath("..", "data", "Comtrade", i)
+		sis = leer_canales(path = ruta)
+		@test estimate_frequency(FE_HFE(fn = 50), sis.ia.valores, 1, sis.ia.frecuencia_muestreo) ≈ CasoSimulado[i][1] rtol = 0.01
 	end
 end

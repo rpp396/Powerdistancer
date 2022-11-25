@@ -3,6 +3,12 @@
 
 include("generarSeno.jl")
 
+
+# para poder correr las pruebas solamente, no es utilizado
+
+c_dummy = Canal_complejo([0, 1], "ic", 1000)
+sis_f = Sistema_trifasico_fasores([], c_dummy, c_dummy, c_dummy, c_dummy, c_dummy, c_dummy, 50, 1000)
+
 @testset "Deteccion de tiempo de ocurrencia de falta" begin
 	f = 50
 	fs = 1000
@@ -46,7 +52,6 @@ include("generarSeno.jl")
 	cib = Canal(vcat(ib_ok, ib_ok, ib_ok), "ib", fs)
 	cic = Canal(vcat(ic_ok, ic_ok, ic_ok), "ic", fs)
 	sis_i = Sistema_trifasico_instanteneos([], cva, cvb, cvc, cia, cib, cic, f, fs)
-	sis_f = Sistema_trifasico_fasores([], cva, cvb, cvc, cia, cib, cic, f, fs)
 	sis_r = Sistema_trifasico_RMS([], cva, cvb, cvc, cia, cib, cic, f, fs)
 
 	@test estimate_time_fault(TF_ALG1(), sis_i, sis_f, sis_r) == 0
@@ -59,7 +64,6 @@ include("generarSeno.jl")
 	cib = Canal(vcat(ib_ok, ib_toc, ib_oc, ib_ok), "ib", fs)
 	cic = Canal(vcat(ic_ok, ic_toc, ic_oc, ic_ok), "ic", fs)
 	sis_i = Sistema_trifasico_instanteneos([], cva, cvb, cvc, cia, cib, cic, f, fs)
-	sis_f = Sistema_trifasico_fasores([], cva, cvb, cvc, cia, cib, cic, f, fs)
 	sis_r = Sistema_trifasico_RMS([], cva, cvb, cvc, cia, cib, cic, f, fs)
 
 	@test estimate_time_fault(TF_ALG1(), sis_i, sis_f, sis_r) == 0
@@ -72,8 +76,17 @@ include("generarSeno.jl")
 	cib = Canal(vcat(ib_ok, ib_ok, ib_ok), "ib", fs)
 	cic = Canal(vcat(ic_ok, ic_ok, ic_ok), "ic", fs)
 	sis_i = Sistema_trifasico_instanteneos([], cva, cvb, cvc, cia, cib, cic, f, fs)
-	sis_f = Sistema_trifasico_fasores([], cva, cvb, cvc, cia, cib, cic, f, fs)
 	sis_r = Sistema_trifasico_RMS([], cva, cvb, cvc, cia, cib, cic, f, fs)
 
 	@test estimate_time_fault(TF_ALG1(), sis_i, sis_f, sis_r) ≈ (length(ia_ok) / fs) rtol = 0.01
 end
+@testset verbose = true "Tiempo de falta contra simulaciones" begin
+	@testset "Simulación $i" for i in keys(CasoSimulado)
+		ruta = joinpath("..", "data", "Comtrade", i)
+		sis = leer_canales(path = ruta)
+		sis_r = rms_calculation(sis)
+		sis_f = calcularFasoresSistema(sis)
+		@test estimate_time_fault(TF_ALG1(), sis, sis_f, sis_r) ≈ CasoSimulado[i][2] rtol = 0.01
+	end
+end
+
